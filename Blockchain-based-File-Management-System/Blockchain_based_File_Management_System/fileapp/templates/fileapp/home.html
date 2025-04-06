@@ -1,0 +1,51 @@
+{% extends 'fileapp/base.html' %}
+
+{% block title %}Home - Blockchain File Management{% endblock %}
+
+{% block content %}
+<div style="text-align: center; max-width: 700px; margin: 0 auto; padding: 2rem 1rem;">
+    <h1 style="margin-bottom: 1rem; color: var(--primary-dark);">Welcome to Blockchain File Management</h1>
+    <p style="color: var(--light-text); font-size: 1.1rem; line-height: 1.6;">
+        Securely store, verify, and manage your files with blockchain technology.
+        Upload your documents and verify their authenticity with unique cryptographic hashes.
+    </p>
+</div>
+
+
+<div class="features">
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-upload"></i>
+        </div>
+        <h3>Upload Files</h3>
+        <p>Securely upload your files to our blockchain-powered storage system.</p>
+        <a href="{% url 'upload_file' %}" class="button">Upload Now</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-list"></i>
+        </div>
+        <h3>View Files</h3>
+        <p>Access and manage all your uploaded files in one convenient location.</p>
+        <a href="{% url 'file_list' %}" class="button">View Files</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <h3>Search Files</h3>
+        <p>Quickly find your files by name or their unique cryptographic hash.</p>
+        <a href="{% url 'search_file' %}" class="button">Search Files</a>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 3rem; padding: 2rem; background-color: var(--secondary-color); border-radius: 10px;">
+    <h3 style="color: var(--primary-dark);">Why Blockchain File Management?</h3>
+    <p style="max-width: 700px; margin: 1rem auto;">
+        Our system uses blockchain technology to create immutable records of your files,
+        ensuring data integrity and providing verifiable proof of existence and ownership.
+    </p>
+</div>
+{% endblock %}

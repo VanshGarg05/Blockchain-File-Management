@@ -1,0 +1,51 @@
+{% extends "fileapp/base.html" %}
+
+{% block title %}Sign Up - Blockchain File Management{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 400px; margin: 3rem auto; background-color: var(--secondary-color); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow);">
+    <h2 class="text-center" style="color: var(--primary-dark); font-weight: bold; margin-bottom: 1.5rem;">Sign Up</h2>
+
+    <form method="post" class="signup-form">
+        {% csrf_token %}
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="id_username" style="font-weight: bold; color: var(--primary-dark);">Username</label>
+            <input type="text" name="username" id="id_username" class="form-control" placeholder="Choose a username" required
+                style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="id_email" style="font-weight: bold; color: var(--primary-dark);">Email</label>
+            <input type="email" name="email" id="id_email" class="form-control" placeholder="Enter your email" required
+                style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="id_password1" style="font-weight: bold; color: var(--primary-dark);">Password</label>
+            <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Create a password" required
+                style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="id_password2" style="font-weight: bold; color: var(--primary-dark);">Confirm Password</label>
+            <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm your password" required
+                style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+        </div>
+
+        <button type="submit" style="width: 100%; background-color: var(--primary-color); color: white; font-weight: bold; padding: 0.8rem; border: none; border-radius: 8px; cursor: pointer;">
+            <i class="fas fa-user-plus"></i> Sign Up
+        </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <p style="color: var(--text-color);">Already have an account?</p>
+        <a href="{% url 'login' %}" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">
+            Login here
+        </a>
+    </div>
+</div>
+
+
+
+{% endblock %}

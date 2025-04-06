@@ -1,0 +1,77 @@
+{% extends 'fileapp/base.html' %}
+
+{% block title %}Search Files - Blockchain File Management{% endblock %}
+
+{% block content %}
+<h2 class="text-center" style="color: var(--primary-dark); font-weight: bold;">Search Files</h2>
+<p style="text-align: center; margin-bottom: 2rem; color: var(--text-color);">
+    Search for your files by name or their unique blockchain hash.
+</p>
+
+<!-- Search Bar -->
+<div style="background-color: var(--secondary-color); border-radius: 12px; padding: 2rem; max-width: 700px; margin: 0 auto 2rem auto; box-shadow: var(--shadow);">
+    <form method="GET" action="{% url 'search_file' %}" class="search-form">
+        <div style="display: flex; width: 100%;">
+            <input type="text" name="q" placeholder="Enter file name or hash..." value="{{ query }}"
+                style="border-radius: 8px 0 0 8px; border-right: none; padding: 0.8rem; width: 100%; border: 1px solid var(--border-color);">
+            <button type="submit" style="background-color: var(--primary-color); color: white; border: none; width: auto; border-radius: 0 8px 8px 0; padding: 0.8rem 1.5rem;">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+    </form>
+</div>
+
+{% if query %}
+    {% if files %}
+        <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 1.5rem;">Search Results for "{{ query }}"</h3>
+        <div class="table-container" style="background-color: var(--secondary-color); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow);">
+            <table class="table" style="width: 100%; border-collapse: collapse;">
+                <thead style="background-color: var(--primary-dark); color: var(--white);">
+                    <tr>
+                        <th class="text-center" style="padding: 10px;">#</th>
+                        <th style="padding: 10px;">File Name</th>
+                        <th style="padding: 10px;">File Hash</th>
+                        <th class="text-center" style="padding: 10px;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr style="border-bottom: 2px solid var(--accent-color); text-align: center;">
+                        <td class="fw-bold">{{ forloop.counter }}</td>
+                        <td style="text-align: left; padding: 10px;">
+                            <a href="{% url 'file_detail' file.id %}" class="text-decoration-none fw-bold" style="color: var(--primary-color);">
+                                <i class="fas fa-file"></i> {{ file.file.name }}
+                            </a>
+                        </td>
+                        <td class="text-muted" style="padding: 10px;"><small>{{ file.file_hash }}</small></td>
+                        <td style="color: var(--primary-dark); font-weight: bold;">
+                            <i class="fas fa-check-circle" style="color: var(--primary-light);"></i> Verified
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 3rem 1rem; background-color: var(--secondary-color); border-radius: 12px; box-shadow: var(--shadow);">
+            <i class="fas fa-search" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+            <h3 style="color: var(--primary-dark);">No Results Found</h3>
+            <p>We couldn't find any files matching your search query.</p>
+            <a href="{% url 'search_file' %}" class="button" style="margin-top: 1rem; background-color: var(--primary-color); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">
+                <i class="fas fa-redo"></i> Clear Search
+            </a>
+        </div>
+    {% endif %}
+{% endif %}
+
+<!-- Upload More Files -->
+<div style="text-align: center; margin-top: 2rem;">
+    <p style="color: var(--light-text);">Can't find what you're looking for?</p>
+    <a href="{% url 'upload_file' %}" class="button" style="background-color: var(--primary-dark); color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none;">
+        <i class="fas fa-plus"></i> Upload a new file
+    </a>
+</div>
+
+
+
+{% endblock %}
