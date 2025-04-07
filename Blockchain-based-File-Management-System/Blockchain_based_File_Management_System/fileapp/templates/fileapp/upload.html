@@ -1,0 +1,42 @@
+{% extends 'fileapp/base.html' %}
+
+{% block title %}Upload File - Blockchain File Management{% endblock %}
+
+{% block content %}
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 2rem 1rem;">
+
+    <h2 style="margin-bottom: 1rem; color: var(--primary-dark);">Upload a File</h2>
+
+    <p style="max-width: 600px; color: var(--light-text); font-size: 1.1rem; line-height: 1.6;">
+        Select a file to upload and securely store on our blockchain system.
+        Each file will receive a unique cryptographic hash.
+    </p>
+
+    <div style="background-color: var(--secondary-color); border-radius: 12px; padding: 2rem; max-width: 600px; width: 100%; text-align: center;">
+        <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data" class="upload-form">
+            {% csrf_token %}
+            <div class="form-group" style="text-align: center;">
+                <label for="file-upload" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Select File:</label>
+                <div style="position: relative;">
+                    <input type="file" name="file" id="file-upload" required
+                           style="border: 2px dashed var(--primary-light); padding: 2rem 1rem; width: 100%; text-align: center;">
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--light-text);">
+                        Maximum file size: 10MB
+                    </p>
+                </div>
+            </div>
+            <button type="submit" class="button" style="margin-top: 1rem; padding: 0.8rem 1.5rem;">
+                <i class="fas fa-cloud-upload-alt"></i> Upload File
+            </button>
+        </form>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <p style="color: var(--light-text);">Already uploaded files?</p>
+        <a href="{% url 'file_list' %}" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">
+            View your files
+        </a>
+    </div>
+
+</div>
+{% endblock %}

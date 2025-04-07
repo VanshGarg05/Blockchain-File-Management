@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Blockchain File Management{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a3bff;
+            --primary-dark: #5028d7;
+            --primary-light: #8b6bff;
+            --secondary-color: #f4f1fe;
+            --accent-color: #c9b6ff;
+            --text-color: #333;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(106, 59, 255, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            padding: 0.6rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .logout-button {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Features */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            flex: 1 1 250px;
+            max-width: 350px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.8rem 1.6rem;
+            background: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(106, 59, 255, 0.3);
+            margin-top: 1rem;
+        }
+
+        .button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(106, 59, 255, 0.4);
+        }
+
+        /* File Details Page */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .table th, .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .badge {
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        .bg-info {
+            background-color: #17a2b8 !important;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    {% if request.resolver_match.url_name not in 'login signup' %}
+    <nav>
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">
+                <i class="fas fa-cube"></i> Blockchain File Manager
+            </a>
+            <div class="nav-links">
+                <a href="{% url 'upload_file' %}"><i class="fas fa-upload"></i> Upload</a>
+                <a href="{% url 'file_list' %}"><i class="fas fa-list"></i> Files</a>
+                <a href="{% url 'search_file' %}"><i class="fas fa-search"></i> Search</a>
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <div class="container">
+        {% block content %}
+        <!-- Default content (e.g., homepage features) -->
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-upload feature-icon"></i>
+                <h3>Upload Files</h3>
+                <p>Securely upload and store your files on the blockchain.</p>
+                <a href="{% url 'upload_file' %}" class="button">Upload</a>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-list feature-icon"></i>
+                <h3>Manage Files</h3>
+                <p>View and manage your uploaded files with ease.</p>
+                <a href="{% url 'file_list' %}" class="button">View Files</a>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-search feature-icon"></i>
+                <h3>Search Files</h3>
+                <p>Find your files quickly using our blockchain search system.</p>
+                <a href="{% url 'search_file' %}" class="button">Search</a>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+
+    <footer style="text-align: center; margin-top: 4rem; padding: 1rem 0; color: var(--text-color); font-size: 0.9rem;">
+        <p>Blockchain File Management System &copy; 2025</p>
+    </footer>
+</body>
+</html>
